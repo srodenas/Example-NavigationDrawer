@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn = "navigation_view">
+
+    <!-- checkableBehavior = "single", hace que el elemento se clicke como si fuera un RadioGroup. -->
+    <group android:checkableBehavior="single">
+        <item android:title="Home"
+
+            android:id="@+id/fragmentHome"
+            android:icon="@drawable/baseline_add_home_24"
+            />
+        <item android:title="Configuration"
+            android:id="@+id/fragmentConf"
+            android:icon="@drawable/baseline_construction_24"
+            />
+        <item android:title="Precipitaciones"
+            android:id="@+id/fragmentPpal"
+            android:icon="@drawable/baseline_cloudy_snowing_24"
+            />
+    </group>
+    <item android:title="" >
+        <menu >
+            <item android:title="Logout" />
+        </menu>
+    </item>
+</menu>
