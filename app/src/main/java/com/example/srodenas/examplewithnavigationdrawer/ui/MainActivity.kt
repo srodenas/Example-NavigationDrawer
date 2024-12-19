@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -37,23 +38,45 @@ class MainActivity : AppCompatActivity() {
         }
 */
         val toolbar = binding.appBarLayoutDrawer.toolbar
-        val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        navController = navHost.navController
 
+        /*
+        1.- supportFragmentManager es el encargado de gestionar todos los fragmentos de nuestra App.
+        2.- Devuelve un objeto del tipo Fragment, por tanto un NavHostFragment es una subclase de Fragment y
+        por ello hacemos el cast.
+        3.- Con el navHostFragment, buscamos el navController porque todo navHostFragment tiene asociado un
+        navController. El navController es el encargado de realizar la navegación. Es el Dios de la navegación entre fragmentos.
+         */
+        val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        navController = navHost.navController  //forma más directa a través del mismo componente
+       // navController = navHost.findNavController()
 
 
         //recuperamos el navView (componente de navegación lateral izquierda)
         val navView = binding.myNavView
 
-        //configuramos los top-level
+        /*
+        configuramos los top-level. Lo que indicamos, es que no aparezca el botón de retroceso
+        y en su lugar que aparezca la hamburguesa.
+         */
         appBarConfiguration = AppBarConfiguration(
             setOf(R.id.fragmentHome, R.id.fragmentConf, R.id.fragmentPpal), // Destinos principales
             binding.main // DrawerLayout
         )
+
         //insertamos la toolbar
         setSupportActionBar(toolbar)
-        setupActionBarWithNavController(navController, appBarConfiguration) //vincula el navController con el toolbar (titulo + hambuerguesa/retroceso)
-        navView.setupWithNavController(navController)   //vincula el menú lateral del drawer con el navController según. el nav_graph
+
+        /*
+        vincula el navController con el toolbar (titulo + hambuerguesa/retroceso)
+        De esa forma, se puede navegar con la toolbar.
+         */
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
+        /*
+        vincula el menú lateral del drawer con el navController según. el nav_graph
+        De esa forma, se puede navegar con la barra lateral izquierda.
+         */
+        navView.setupWithNavController(navController)
     }
 
     /*
